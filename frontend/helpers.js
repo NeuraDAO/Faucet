@@ -1,4 +1,4 @@
-import { ethers } from "ethers";
+import { ethers, utils } from "ethers";
 import { toast } from "react-hot-toast";
 
 import NeuraTokenABI from "../hardhat/artifacts/contracts/NeuraToken.sol/NeuraToken.json";
@@ -11,7 +11,8 @@ const tokenAddress = process.env.NEXT_PUBLIC_TOKEN_ADDRESS;
  */
 const faucet = async () => {
   if (typeof window.ethereum !== "undefined") {
-    const amount = 1000;
+    const amount = "1000";
+    let wei = utils.parseEther(amount);
     try {
       const account = await window.ethereum.request({
         method: "eth_requestAccounts",
@@ -23,7 +24,7 @@ const faucet = async () => {
         NeuraTokenABI.abi,
         signer
       );
-      await contract.mint(account[0], amount);
+      await contract.mint(account[0], wei);
       toast.success(`Success! You have minted ${amount} tokens!`);
       return true;
     } catch (err) {
