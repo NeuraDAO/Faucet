@@ -19,6 +19,17 @@ const Home = () => {
           <button
             className="button-glow font-inter"
             disabled={loading}
+            onClick={async () => {
+              setLoading(true);
+              await console.log("Connecting Wallet");
+              setLoading(false);
+            }}
+          >
+            Connect{loading && "ing"} wallet
+          </button>
+          <button
+            className="button-glow font-inter"
+            disabled={loading}
             onClick={() => {
               setLoading(true);
               faucet();
